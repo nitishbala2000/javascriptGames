@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/javascriptGames/static/css/main.30ca6eb7.chunk.css",
+    "main.js": "/javascriptGames/static/js/main.5b8d0f55.chunk.js",
+    "main.js.map": "/javascriptGames/static/js/main.5b8d0f55.chunk.js.map",
+    "runtime-main.js": "/javascriptGames/static/js/runtime-main.33565cf0.js",
+    "runtime-main.js.map": "/javascriptGames/static/js/runtime-main.33565cf0.js.map",
+    "static/js/2.1a0244fb.chunk.js": "/javascriptGames/static/js/2.1a0244fb.chunk.js",
+    "static/js/2.1a0244fb.chunk.js.map": "/javascriptGames/static/js/2.1a0244fb.chunk.js.map",
+    "index.html": "/javascriptGames/index.html",
+    "precache-manifest.dcbd228acb1c1eb5bc23866436b2eb33.js": "/javascriptGames/precache-manifest.dcbd228acb1c1eb5bc23866436b2eb33.js",
+    "service-worker.js": "/javascriptGames/service-worker.js",
+    "static/css/main.30ca6eb7.chunk.css.map": "/javascriptGames/static/css/main.30ca6eb7.chunk.css.map",
+    "static/js/2.1a0244fb.chunk.js.LICENSE.txt": "/javascriptGames/static/js/2.1a0244fb.chunk.js.LICENSE.txt",
+    "static/media/background.jpg": "/javascriptGames/static/media/background.ec4816fb.jpg",
+    "static/media/catcher1.png": "/javascriptGames/static/media/catcher1.c02c3cb8.png",
+    "static/media/catcher2.png": "/javascriptGames/static/media/catcher2.05c73bfa.png",
+    "static/media/food.png": "/javascriptGames/static/media/food.1c2a5d18.png",
+    "static/media/tile.png": "/javascriptGames/static/media/tile.1d29b853.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.33565cf0.js",
+    "static/js/2.1a0244fb.chunk.js",
+    "static/css/main.30ca6eb7.chunk.css",
+    "static/js/main.5b8d0f55.chunk.js"
+  ]
+}
