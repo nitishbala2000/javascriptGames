@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import "./Game.css";
-import {BreakoutGame} from "../../games/breakout/game";
-
+import * as breakout from "../../games/breakout/game";
+import * as jewelThief from "../../games/jewel-thief/game";
 
 
 class Game extends Component {
@@ -16,7 +16,11 @@ class Game extends Component {
 
         switch (this.props.game) {
             case "breakout" : {
-                this.game = new BreakoutGame();
+                this.game = new breakout.BreakoutGame();
+                break;
+            } case "jewel-thief" : {
+                this.game = new jewelThief.JewelThiefGame();
+                break;
             }
         }
     }
@@ -30,9 +34,23 @@ class Game extends Component {
     }
 
     render() {
+
+        let height, width;
+        switch (this.props.game) {
+            case "breakout" : {
+                height = breakout.SCREEN_HEIGHT;
+                width = breakout.SCREEN_WIDTH;
+                break;
+            } case "jewel-thief" : {
+                height = jewelThief.SCREEN_HEIGHT;
+                width = jewelThief.SCREEN_WIDTH;
+                break;
+            }
+        }
+
         return (
             <Fragment>
-                <canvas id={this.props.canvasId} height={this.props.height} width={this.props.width}>
+                <canvas height={height} width={width}>
                     It seems like your browser doen't support canvas. Stop using internet explorer!!
                 </canvas>
 

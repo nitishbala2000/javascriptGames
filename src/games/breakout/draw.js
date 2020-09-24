@@ -1,8 +1,8 @@
-import {WIDTH, HEIGHT} from "./game.js";
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from "./game.js";
 
 export function drawStartScreen(context) {
     context.save();
-    context.clearRect(0, 0, WIDTH, HEIGHT);
+    context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     context.font = "20px calibri";
     context.fillText("Click here to start the game", 230, 250);
     context.restore();
@@ -11,7 +11,7 @@ export function drawStartScreen(context) {
 export function drawGame (context, score, lives, tiles, bat, ball) {
     
     context.save();
-    context.clearRect(0, 0, WIDTH, HEIGHT);
+    context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     context.fillText("Score: " + score, 5, 480);
     context.fillText("Lives: " + lives, 430, 480);
@@ -26,11 +26,11 @@ export function drawGame (context, score, lives, tiles, bat, ball) {
 }
 
 export function drawWinScreen(context, score, lives, tiles, bat, ball) {
-    drawGame(score, lives, tiles, bat, ball);
+    drawGame(context, score, lives, tiles, bat, ball);
     context.fillText("Well done, you won!", 160, 250);
 }
 
 export function drawLossScreen(context, score, lives, tiles, bat, ball) {
-    drawGame(score, lives, tiles, bat, ball);
-    context.fillText("Game Over, your score was " + this.score, 160, 250);
+    drawGame(context, score, lives, tiles, bat, ball);
+    context.fillText("Game Over, your score was " + score, 160, 250);
 }

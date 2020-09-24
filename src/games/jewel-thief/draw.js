@@ -1,7 +1,7 @@
-import {SCREEN_WIDTH,SCREEN_HEIGHT,GAME_WIDTH,mouseX, mouseY, context} from "./game.js";
+import {SCREEN_WIDTH,SCREEN_HEIGHT,GAME_WIDTH,mouseX, mouseY} from "./game.js";
 
 
-export function drawRoundedButtonWithText(x,y,width,height,text,buttonColour, buttonHoverColour, textColour) {
+export function drawRoundedButtonWithText(context, x,y,width,height,text,buttonColour, buttonHoverColour, textColour) {
 
     context.save();
      //If the mouse is within the button
@@ -20,7 +20,7 @@ export function drawRoundedButtonWithText(x,y,width,height,text,buttonColour, bu
     context.restore();
 }
 
-export function drawStart() {
+export function drawStart(context) {
     context.save();
     context.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
     context.textAlign = "center";
@@ -29,13 +29,13 @@ export function drawStart() {
     context.fillText("Jewel Thief", SCREEN_WIDTH/2, 250);
 
     context.fillStyle = "#F1C40F";
-    context.fillRect(0,400,canvas.width,100);
+    context.fillRect(0,400,SCREEN_WIDTH,100);
 
-    drawRoundedButtonWithText(400,430,200,50,"Start Game","red","grey","white");
+    drawRoundedButtonWithText(context, 400,430,200,50,"Start Game","red","grey","white");
     context.restore();
 }
 
-export function drawInstructions() {
+export function drawInstructions(context) {
     context.save();
     context.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
     context.textAlign = "center";
@@ -55,12 +55,12 @@ export function drawInstructions() {
     context.fillText("Get to the end!", SCREEN_WIDTH / 2, 400);
 
  
-    drawRoundedButtonWithText(750, 500,200,50,"Next", "#27AE60", "#2ECC71","#2C3E50" );
+    drawRoundedButtonWithText(context, 750, 500,200,50,"Next", "#27AE60", "#2ECC71","#2C3E50" );
 
     context.restore();
 }
 
-export function drawControls() {
+export function drawControls(context) {
     context.save();
     context.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
     context.textAlign = "center";
@@ -71,68 +71,68 @@ export function drawControls() {
     context.fillStyle = "#2C3E50";
     context.font = "30px Arial";
     context.fillText("Movement", 200, 150);
-    drawRoundedButtonWithText(180, 170, 50,50,'\u2191', "#BDC3C7","#ECF0F1", "#2C3E50" );
-    drawRoundedButtonWithText(180, 230,50,50,'\u2193',"#BDC3C7","#ECF0F1", "#2C3E50"  );
-    drawRoundedButtonWithText(120, 230,50,50,'\u2190',"#BDC3C7","#ECF0F1", "#2C3E50"  );
-    drawRoundedButtonWithText(240, 230,50,50,'\u2192',"#BDC3C7","#ECF0F1", "#2C3E50"  );
+    drawRoundedButtonWithText(context, 180, 170, 50,50,'\u2191', "#BDC3C7","#ECF0F1", "#2C3E50" );
+    drawRoundedButtonWithText(context, 180, 230,50,50,'\u2193',"#BDC3C7","#ECF0F1", "#2C3E50"  );
+    drawRoundedButtonWithText(context, 120, 230,50,50,'\u2190',"#BDC3C7","#ECF0F1", "#2C3E50"  );
+    drawRoundedButtonWithText(context, 240, 230,50,50,'\u2192',"#BDC3C7","#ECF0F1", "#2C3E50"  );
 
 
     context.fillText("Shoot Bullet", 700, 150);
     context.font = "25px Arial";
     context.fillText("Left", 650, 200);
     context.fillText("Right", 750, 200);
-    drawRoundedButtonWithText(625,220, 50,50,"O", "#BDC3C7","#ECF0F1", "#2C3E50" );
-    drawRoundedButtonWithText(725,220, 50,50,"P", "#BDC3C7","#ECF0F1", "#2C3E50" );
+    drawRoundedButtonWithText(context, 625,220, 50,50,"O", "#BDC3C7","#ECF0F1", "#2C3E50" );
+    drawRoundedButtonWithText(context, 725,220, 50,50,"P", "#BDC3C7","#ECF0F1", "#2C3E50" );
 
     context.font = "30px Arial";
     context.fillText("Toggle Shape", SCREEN_WIDTH / 2, 400);
-    drawRoundedButtonWithText(350, 420, 300,50,"Space", "#BDC3C7","#ECF0F1", "#2C3E50" );
+    drawRoundedButtonWithText(context, 350, 420, 300,50,"Space", "#BDC3C7","#ECF0F1", "#2C3E50" );
 
-    drawRoundedButtonWithText(750, 500,200,50,"Start", "#27AE60", "#2ECC71","#2C3E50" );
+    drawRoundedButtonWithText(context, 750, 500,200,50,"Start", "#27AE60", "#2ECC71","#2C3E50" );
 
     context.restore();
 }
 
-export function drawWinPage(camera, player, jewel, randomPixels, enemies, lives) {
+export function drawWinPage(context, camera, player, jewel, randomPixels, enemies, lives) {
     context.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
     context.save();
-    drawEverything(camera, player, jewel, randomPixels, enemies, lives);
+    drawEverything(context, camera, player, jewel, randomPixels, enemies, lives);
     context.fillStyle = "#2C3E50";
     context.font = "50px Arial";
     context.textAlign = "center";
     context.fillText("You Won!", SCREEN_WIDTH / 2, 200);
 
-    drawRoundedButtonWithText(400,300,200,50,"Play Again","#27AE60", "#2ECC71","white");
+    drawRoundedButtonWithText(context, 400,300,200,50,"Play Again","#27AE60", "#2ECC71","white");
 
-    drawRoundedButtonWithText(400,400,200,50,"Main Menu","#27AE60", "#2ECC71","white");
+    drawRoundedButtonWithText(context, 400,400,200,50,"Main Menu","#27AE60", "#2ECC71","white");
 
     context.save();
 }
 
-export function drawLossPage(camera, player, jewel, randomPixels, enemies, lives) {
+export function drawLossPage(context, camera, player, jewel, randomPixels, enemies, lives) {
     context.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
     context.save();
-    drawEverything(camera, player, jewel, randomPixels, enemies, lives);
+    drawEverything(context, camera, player, jewel, randomPixels, enemies, lives);
     context.fillStyle = "#2C3E50";
     context.font = "50px Arial";
     context.textAlign = "center";
     context.fillText("Game Over!", SCREEN_WIDTH / 2, 200);
 
-    drawRoundedButtonWithText(400,300,200,50,"Play Again","#27AE60", "#2ECC71","white");
+    drawRoundedButtonWithText(context, 400,300,200,50,"Play Again","#27AE60", "#2ECC71","white");
 
-    drawRoundedButtonWithText(400,400,200,50,"Main Menu","#27AE60", "#2ECC71","white");
+    drawRoundedButtonWithText(context, 400,400,200,50,"Main Menu","#27AE60", "#2ECC71","white");
 
     context.save();
 }
 
-export function drawPixel(p, camera) {
+function drawPixel(context, p, camera) {
     context.save();
     context.fillStyle = "#AE6A30";
     context.fillRect(p.x - camera.x, p.y - camera.y, 5, 5);
     context.restore();
 }
 
-export function drawJewel(camera, jewel) {
+function drawJewel(context, camera, jewel) {
     context.save();
     //Draw the grey pillar
     var endX = GAME_WIDTH - 100;
@@ -146,7 +146,7 @@ export function drawJewel(camera, jewel) {
     context.restore();
 }
 
-export function drawEverything(camera, player, jewel, randomPixels, enemies, lives) {
+export function drawEverything(context, camera, player, jewel, randomPixels, enemies, lives) {
     lives = Math.max(lives, 0);
     context.save();
     context.clearRect(0,0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -159,10 +159,10 @@ export function drawEverything(camera, player, jewel, randomPixels, enemies, liv
     player.draw(context, camera);
 
     //Draw the juel and pillar in the far right
-    drawJewel(camera, jewel);
+    drawJewel(context, camera, jewel);
 
     for (var i = 0; i < randomPixels.length; i++) {
-        drawPixel(randomPixels[i], camera);
+        drawPixel(context, randomPixels[i], camera);
     }
 
     for (var i = 0; i < enemies.length; i++) {

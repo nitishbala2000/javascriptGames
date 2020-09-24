@@ -5,8 +5,8 @@ import * as draw from "./draw.js";
 
 
 
-export var WIDTH = 500;
-export var HEIGHT = 500;
+export var SCREEN_WIDTH = 500;
+export var SCREEN_HEIGHT = 500;
 
 var margin_x = 5;
 var margin_y = 5;
@@ -40,7 +40,8 @@ export class BreakoutGame {
 
     constructor() {
 
-        let myCanvas = document.getElementById("breakoutCanvas");
+        let myCanvas = document.querySelector("canvas");
+        myCanvas.style.backgroundColor = "white";
 
         this.context = myCanvas.getContext("2d");
         this.context.font = "20px calibri";
@@ -58,7 +59,6 @@ export class BreakoutGame {
 
         this.intervalVar = setInterval(() => {
 
-            let context = this.context;
 
             switch (this.state) {
                 case "notStarted": {
@@ -72,13 +72,13 @@ export class BreakoutGame {
                 }
 
                 case "won": {
-                    draw.drawWinScreen(context, this.score, this.lives, this.tiles, this.bat, this.ball);
+                    draw.drawWinScreen(this.context, this.score, this.lives, this.tiles, this.bat, this.ball);
                     break;
                 } 
 
                 default: {
                     //lost
-                    draw.drawLossScreen(context, this.score, this.lives, this.tiles, this.bat, this.ball);
+                    draw.drawLossScreen(this.context, this.score, this.lives, this.tiles, this.bat, this.ball);
                 }
             }
           
@@ -91,8 +91,8 @@ export class BreakoutGame {
 
         draw.drawGame(context, this.score, this.lives, this.tiles, this.bat, this.ball);
 
-        this.bat.move(WIDTH);
-        this.ball.updatePositionAndDirection(WIDTH, HEIGHT);
+        this.bat.move(SCREEN_WIDTH);
+        this.ball.updatePositionAndDirection(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         var tileIndicesToRemove = [];
         for (var i = 0; i < this.tiles.length; i++) {
@@ -118,7 +118,7 @@ export class BreakoutGame {
             this.ball.changeYDirection();
         }
 
-        if (this.ball.y > HEIGHT) {
+        if (this.ball.y > SCREEN_HEIGHT) {
             this.lives--;
             if (this.lives == 0) {
                 //End game

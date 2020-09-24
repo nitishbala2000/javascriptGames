@@ -25,13 +25,3 @@ canvas {
     border: 1px black solid;
     margin-top : 50px;
 }
-
-#cupcakeCatcherCanvas {
-    background-image: url("%PUBLIC_URL%/games/cupcake-catcher/images/background.jpg");
-}
-
-#jewelThiefCanvas {
-    background-color: #E67E22;
-}
-
-
