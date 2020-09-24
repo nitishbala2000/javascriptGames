@@ -1,24 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Link, Switch, Route} from "react-router-dom";
+import Game from "./components/Game/Game";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div style={{textAlign:"center"}}>
+
+        <div className="dropdown">
+          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Choose your game
+          </button>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <Link className="dropdown-item" to="/jewel-thief">Jewel Thief</Link>
+            <Link className="dropdown-item" to="/cupcake-catcher">Cupcake catcher</Link>
+            <Link className="dropdown-item" to="/breakout">Breakout</Link>
+            <Link className="dropdown-item" to="/snake">Snake</Link>
+          </div>
+        </div>
+
+        <Switch>
+          <Route path="/breakout" render={(props) => <Game {...props}
+                                                          height="500" 
+                                                          width="500"
+                                                          canvasId="breakoutCanvas"
+                                                          scriptPath={process.env.PUBLIC_URL + "/games/breakout/game.js"}/>  }/>
+          
+
+          <Route path="/" render={(props) => <Game {...props} height="600" width="1000"/>}/>
+        </Switch>
+
+
+       
+
+      </div>
     </div>
   );
 }
