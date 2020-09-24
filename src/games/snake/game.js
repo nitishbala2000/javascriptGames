@@ -59,7 +59,8 @@ export class SnakeGame {
             case "notStarted" : {
                 this.context.save();
                 this.context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-                this.context.font = "20ox calibri";
+                this.context.font = "20px calibri";
+                this.context.fillStyle = "black";
                 this.context.fillText("Click to start",200,30);
                 this.context.restore();
                 break;
@@ -93,9 +94,12 @@ export class SnakeGame {
 
 
     drawGame = () => {
+        this.context.save();
+        this.context.fillStyle = "black";
         this.context.fillText("Score: " + this.score, 430,30);
         this.snake.draw(this.context);
         this.food.draw(this.context);
+        this.context.restore();
     }
 
     gameLoop = () => {

@@ -14,6 +14,7 @@ export function drawGame (context, score, lives, tiles, bat, ball) {
     context.save();
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+    context.fillStyle = "black";
     context.fillText("Score: " + score, 5, 480);
     context.fillText("Lives: " + lives, 430, 480);
 
