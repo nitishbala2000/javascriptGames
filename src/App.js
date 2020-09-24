@@ -25,7 +25,7 @@ function App() {
                                                           height="500" 
                                                           width="500"
                                                           canvasId="breakoutCanvas"
-                                                          scriptPath={process.env.PUBLIC_URL + "/games/breakout/game.js"}/>  }/>
+                                                          game="breakout"/>  }/>
           
 
           <Route path="/" render={(props) => <Game {...props} height="600" width="1000"/>}/>

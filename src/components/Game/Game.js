@@ -8,8 +8,25 @@ class Game extends Component {
 
     game = null;
 
-    componentDidUpdate() {
+    startGame = () => {
+        if (this.game) {
+            this.game.stop();
+        }
 
+
+        switch (this.props.game) {
+            case "breakout" : {
+                this.game = new BreakoutGame();
+            }
+        }
+    }
+
+    componentDidUpdate() {
+       this.startGame();
+    }
+
+    componentDidMount() {
+      this.startGame();
     }
 
     render() {

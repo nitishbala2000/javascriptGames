@@ -1,12 +1,13 @@
 import { Tile } from "./tile.js";
 import { Bat } from "./bat.js"
 import { Ball } from "./ball.js";
+import * as draw from "./draw.js";
 
 
 
+export var WIDTH = 500;
+export var HEIGHT = 500;
 
-var WIDTH = 500;
-var HEIGHT = 500;
 var margin_x = 5;
 var margin_y = 5;
 var batY = 400;
@@ -35,19 +36,19 @@ export class BreakoutGame {
     state = null;
     intervalVar = null;
     context = null;
-    canvas = null;
+
 
     constructor() {
 
         let myCanvas = document.getElementById("breakoutCanvas");
-        
-        this.context = this.canvas.getContext("2d");
+
+        this.context = myCanvas.getContext("2d");
         this.context.font = "20px calibri";
 
         this.state = "notStarted";
 
-        myCanvas.onclick = function () {
-            if (this.state !== "notStarted") {
+        myCanvas.onclick = () => {
+            if (this.state !== "running") {
                 this.initialiseGame();
                 this.state = "running";
             }
@@ -61,9 +62,7 @@ export class BreakoutGame {
 
             switch (this.state) {
                 case "notStarted": {
-                    context.clearRect(0, 0, WIDTH, HEIGHT);
-                    context.font = "20px calibri";
-                    context.fillText("Click here to start the game", 230, 250);
+                    draw.drawStartScreen(this.context);
                     break;
                 }
 
@@ -73,36 +72,24 @@ export class BreakoutGame {
                 }
 
                 case "won": {
-                    context.clearRect(0, 0, WIDTH, HEIGHT);
-                    context.fillText("Well done, you won!", 160, 250);
+                    draw.drawWinScreen(context, this.score, this.lives, this.tiles, this.bat, this.ball);
+                    break;
                 } 
 
                 default: {
                     //lost
-                    context.clearRect(0, 0, WIDTH, HEIGHT);
-                    context.fillText("Well done, you won!", 160, 250);
-                    context.fillText("Game Over, your score was " + this.score, 160, 250);
+                    draw.drawLossScreen(context, this.score, this.lives, this.tiles, this.bat, this.ball);
                 }
             }
           
-        }, 100);
+        }, 20);
     }
 
     gameLoop() {
 
         let context = this.context;
 
-        context.clearRect(0, 0, WIDTH, HEIGHT);
-
-        context.fillText("Score: " + this.score, 5, 480);
-        context.fillText("Lives: " + this.lives, 430, 480);
-
-        for (var i = 0; i < this.tiles.length; i++) {
-            this.tiles[i].draw(context);
-        }
-
-        this.bat.draw(context);
-        this.ball.draw(context);
+        draw.drawGame(context, this.score, this.lives, this.tiles, this.bat, this.ball);
 
         this.bat.move(WIDTH);
         this.ball.updatePositionAndDirection(WIDTH, HEIGHT);
@@ -161,13 +148,28 @@ export class BreakoutGame {
         //Create bat
         this.bat = new Bat(batDimensions, batY);
 
+        document.onkeydown = (event) => {
+            if (event.keyCode == 37) {
+                this.bat.vx = -5;
+            } else if (event.keyCode == 39) {
+                this.bat.vx = 5;
+            }
+        }
+        
+        document.onkeyup = (event) => {
+            if (event.keyCode == 37 || event.keyCode == 39) {
+                this.bat.vx = 0;
+            }
+        }
+        
+
         this.ball = new Ball(ballRadius, ballSpeed);
 
         this.score = 0;
         this.lives = 3;
     }
 
-    stopGame() {
+    stop() {
         if (this.intervalVar) {
             clearInterval(this.intervalVar);
         }
