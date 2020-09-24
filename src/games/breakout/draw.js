@@ -4,6 +4,7 @@ export function drawStartScreen(context) {
     context.save();
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     context.font = "20px calibri";
+    context.fillStyle = "black";
     context.fillText("Click here to start the game", 230, 250);
     context.restore();
 }

@@ -42,6 +42,7 @@ export class BreakoutGame {
 
         let myCanvas = document.querySelector("canvas");
         myCanvas.style.backgroundColor = "white";
+        myCanvas.style.backgroundImage = "none";
 
         this.context = myCanvas.getContext("2d");
         this.context.font = "20px calibri";

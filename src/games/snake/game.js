@@ -1,113 +1,154 @@
 import {Snake} from "./snake.js";
 import {Food} from "./food.js";
 
-var canvas = document.getElementById("snakeCanvas");
-var context = canvas.getContext("2d");
-context.font = "20ox calibri";
-context.fillText("Click to start",200,30);
 
-var WIDTH = canvas.width;
-var HEIGHT = canvas.height;
 
-var snake,food,running,score,interval;
+export const SCREEN_WIDTH = 500;
+export const SCREEN_HEIGHT = 500;
 
-var snakeCellInfo = {
+
+const snakeCellInfo = {
     width: 10,
     height: 10,
     color: "green"
 };
 
-var foodCellInfo = {
+const foodCellInfo = {
     width: 10,
     height: 10,
     color: "orange"
 };
 
-document.onkeydown = function(event) {
+
+export class SnakeGame {
+
+    snake = null;
+    food = null;
+    running = null;
+    score = null;
+    interval = null;
+    timeoutVar = null;
+
+
+    constructor() {
+
+        let myCanvas = document.querySelector("canvas");
+        myCanvas.style.backgroundColor = "white";
+        myCanvas.style.backgroundImage = "none";
+
+        this.context = myCanvas.getContext("2d");
+        this.context.font = "20px calibri";
+
+        this.state = "notStarted";
+
+        myCanvas.onclick = () => {
+            if (this.state !== "running") {
+                this.initialiseGame();
+                this.state = "running";
+            }
+        }
+
+        this.interval = 100;
+        this.timeoutVar = setTimeout(this.timeoutLoop, this.interval);
+
+    }
+
+    timeoutLoop = () => {
+
+        switch (this.state) {
+            case "notStarted" : {
+                this.context.save();
+                this.context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+                this.context.font = "20ox calibri";
+                this.context.fillText("Click to start",200,30);
+                this.context.restore();
+                break;
+            }
+
+            case "running" : {
+                this.gameLoop();
+                break;
+            }
+
+            case "lost" : {
+                this.context.save();
+                this.context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+                this.drawGame();
+                this.context.font = "30px calibri";
+                this.context.fillStyle = "red";
+                this.context.fillText("Game Over, your score was " + this.score, 0, 240);
+                this.context.fillStyle = "black";
+                this.context.fillText("Click to start again", 0, 270);
+                this.context.restore();
+                break;
+            }
+
+
+        }
+
+        this.timeoutVar = setTimeout(this.timeoutLoop, this.interval);
+
+
+    }
+
+
+    drawGame = () => {
+        this.context.fillText("Score: " + this.score, 430,30);
+        this.snake.draw(this.context);
+        this.food.draw(this.context);
+    }
+
+    gameLoop = () => {
+        this.context.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+        this.drawGame();
     
-    if (event.keyCode == 37 && snake.direction != "right") {
-        snake.direction = "left";
-    } else if (event.keyCode == 38 && snake.direction != "down") {
-        snake.direction = "up";                
-    } else if (event.keyCode == 39 && snake.direction != "left") {
-        snake.direction = "right";             
-    } else if (event.keyCode == 40 && snake.direction != "up") {
-        snake.direction = "down";
-    }
-}
+        if (this.snake.hasEaten(this.food)) {
+            this.score++;
+            this.food.spawn();
+            this.snake.extend();
+            this.interval = Math.max(this.interval - 5, 10);
+        }
+    
+    
+        if (this.snake.hasEatenItself()) {
 
-function gameLoop() {
-    context.clearRect(0,0,WIDTH,HEIGHT);
-    context.fillText("Score: " + score, 430,30);
-    context.fillText("Frames per second: " + (1000/interval), 380, 40)
-    snake.draw(context);
-    food.draw(context);
-
-    if (snake.hasEaten(food)) {
-        score++;
-        food.spawn();
-        snake.extend();
-        interval = Math.max(interval - 5, 10);
+            //Game over
+            this.state = "lost";
+    
+            this.interval = 100;
+        } else {
+            this.snake.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT);
+        }
+    
     }
 
 
-    if (snake.hasEatenItself()) {
-        running = false;
+    initialiseGame = () => {
+        this.snake = new Snake([{x:220,y:200},{x:210,y:200},{x:200,y:200}], snakeCellInfo);
+        this.food = new Food(foodCellInfo);
+        this.food.spawn();
 
-        //Game over message
-        context.save();
-        context.font = "30px calibri";
-        context.fillStyle = "red";
-        context.fillText("Game Over, your score was " + score, 0, 240);
-        context.fillStyle = "black";
-        context.fillText("Click to start again", 0, 270);
-        context.restore();
+        this.score = 0;
+        this.interval = 100;
+
+        document.onkeydown = event => {
+    
+            if (event.keyCode == 37 && this.snake.direction != "right") {
+                this.snake.direction = "left";
+            } else if (event.keyCode == 38 && this.snake.direction != "down") {
+                this.snake.direction = "up";                
+            } else if (event.keyCode == 39 && this.snake.direction != "left") {
+                this.snake.direction = "right";             
+            } else if (event.keyCode == 40 && this.snake.direction != "up") {
+                this.snake.direction = "down";
+            }
+        }
+        
+      
     }
 
-    snake.updatePosition(WIDTH,HEIGHT);
-    if (running) {
-        setTimeout(gameLoop, interval);
+    stop() {
+     clearTimeout(this.timeoutVar);
     }
-}
-
-
-canvas.onclick = function() {
-    if (!running) {
-        //Initialise game
-        running = true;
-        snake = new Snake([{x:220,y:200},{x:210,y:200},{x:200,y:200}], snakeCellInfo);
-        food = new Food(foodCellInfo);
-        food.spawn();
-
-        score = 0;
-        interval = 100;
-
-        gameLoop();
-       
-    }
-
-        // var intervalVar = setInterval(function() {
-        //     context.clearRect(0,0,WIDTH,HEIGHT);
-        //     context.fillText("Score: " + score, 430,30);
-        //     snake.draw(context);
-        //     food.draw(context);
-
-        //     if (snake.hasEaten(food)) {
-        //         score++;
-        //         food.spawn();
-        //         snake.extend();
-
-        //     }
-
-
-        //     if (snake.hasEatenItself()) {
-        //         running = false;
-        //         context.fillText("Game Over, your score was " + score + ", click to continue", 200, 30);
-        //         clearInterval(intervalVar);
-        //     }
-
-        //     snake.updatePosition(WIDTH,HEIGHT);
-
-
-        // }, 80);
+    
 }

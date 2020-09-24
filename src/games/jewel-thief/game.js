@@ -43,6 +43,8 @@ export class JewelThiefGame {
 
         let myCanvas = document.querySelector("canvas");
         myCanvas.style.backgroundColor = "#E67E22"
+        myCanvas.style.backgroundImage = "none";
+        
         this.context = myCanvas.getContext("2d");
         this.state = "Start";
 

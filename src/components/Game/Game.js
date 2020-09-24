@@ -2,7 +2,8 @@ import React, { Component, Fragment } from "react";
 import "./Game.css";
 import * as breakout from "../../games/breakout/game";
 import * as jewelThief from "../../games/jewel-thief/game";
-
+import * as cupcakeCatcher from "../../games/cupcake-catcher/game";
+import * as snake from "../../games/snake/game";
 
 class Game extends Component {
 
@@ -21,6 +22,11 @@ class Game extends Component {
             } case "jewel-thief" : {
                 this.game = new jewelThief.JewelThiefGame();
                 break;
+            } case "cupcake-catcher" : {
+                this.game = new cupcakeCatcher.CupcakeCatcherGame();
+                break;
+            } case "snake" : {
+                this.game = new snake.SnakeGame();
             }
         }
     }
@@ -45,6 +51,19 @@ class Game extends Component {
                 height = jewelThief.SCREEN_HEIGHT;
                 width = jewelThief.SCREEN_WIDTH;
                 break;
+            } case "cupcake-catcher" : {
+                height = cupcakeCatcher.SCREEN_HEIGHT;
+                width = cupcakeCatcher.SCREEN_WIDTH;
+                break;
+            } case "snake" : {
+                height = snake.SCREEN_HEIGHT;
+                width = snake.SCREEN_WIDTH;
+                break;
+            }
+            
+            default : {
+                height = 600;
+                width = 1000;
             }
         }
 
